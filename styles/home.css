@@ -2,5 +2,15 @@
     text-align: center;
     font-size: large;
     font-family: 'Courier New', Courier, monospace;
-    color: blueviolet;
+    color: white;
+    background-color: blue;
+    display: inline-block;
+}
+#status0{
+    color: orange;
+}
+p {
+    color: black;
+    border: 2px;
+    border-radius: 1px;
 }
