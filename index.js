@@ -4,7 +4,8 @@ const app = express();
 const http = require('http').Server(express)
 const port = 80;
 var ip = require("ip");
-// console.dir ( ip.address() );
+
+console.log("Initializing SafeGuard Server...")
 
 app.use(express.json());
 var bodyParser = require('body-parser')
@@ -33,27 +34,29 @@ app.get('/testReq', function(req, res){
 
 //Cellular Communication - Body Contains Various Data from device. See documentation for what
 app.post("/", jsonParser , (req, res) => {
-  console.log("SERVER PINGED")
-  console.log(req.body)
-  res.send("Hello World! - SD Server")
-
-    // console.log(JSON.parse(req.body))
-  // console.log(JSON.stringify(JSON.parse(req.body)))
-  // console.log("===================================")
-  // console.log(req.db)
-  // console.log(req)
+  console.log("SERVER PINGED THROUGH POST")
+  try{
+    console.log(req.body)
+    res.send("Hello World! - SD Server Recieved Your JSON!")
+  } catch (e){
+    console.log("Err: JSON Attatchment Exception - No Body")
+    console.log(e)
+  }
 });
-/*END ROUTING*/
-
-/*Sylesheet Routing */
+/*END SERVER ROUTING*/
 app.use(express.static(__dirname + '/styles'));
 
 app.use('/img' ,express.static(__dirname + '/views/img'));
+/*Sylesheet Routing END*/
 
 app.listen(port, () => {
   console.log(`Capstone Server currently listening on ${port}.`);
 });
 
+/* Server Related END */
+
+
+/* Tunneling Section */
 const localtunnel = require('localtunnel');
 
 (async () => {
@@ -62,7 +65,4 @@ const localtunnel = require('localtunnel');
   tunnel.on('close', () => { //Close tunnel upon termination
   });
 })();
-
-// http.listen(port,function () {
-//   console.log(`Capstone Server currently listening on ${port}.`);
-// });
+/* TUNNELING SECTION END */
