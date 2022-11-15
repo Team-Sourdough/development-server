@@ -54,6 +54,15 @@ app.listen(port, () => {
   console.log(`Capstone Server currently listening on ${port}.`);
 });
 
+const localtunnel = require('localtunnel');
+
+(async () => {
+  const tunnel = await localtunnel({ port: 80 , subdomain: "sourdough"});
+  tunnel.url; //Tunnel URL
+  tunnel.on('close', () => { //Close tunnel upon termination
+  });
+})();
+
 // http.listen(port,function () {
 //   console.log(`Capstone Server currently listening on ${port}.`);
 // });
