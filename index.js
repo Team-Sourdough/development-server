@@ -1,3 +1,4 @@
+//Packages
 const { timeStamp } = require("console");
 const express = require("express");
 const app = express();
@@ -7,6 +8,7 @@ var ip = require("ip");
 
 console.log("Initializing SafeGuard Server...")
 
+//Parsing packaging from Express. Used to parse json packets on reception
 app.use(express.json());
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
@@ -32,7 +34,7 @@ app.get('/testReq', function(req, res){
 })
 
 
-//Cellular Communication - Body Contains Various Data from device. See documentation for what
+//Cellular Communication - Body Contains Various Data from device. See documentation for what data we currently pass
 app.post("/", jsonParser , (req, res) => {
   console.log("SERVER PINGED THROUGH POST")
   try{
@@ -44,24 +46,44 @@ app.post("/", jsonParser , (req, res) => {
   }
 });
 /*END SERVER ROUTING*/
+/* Stylesheet Routing BEGIN */
 app.use(express.static(__dirname + '/styles'));
 
 app.use('/img' ,express.static(__dirname + '/views/img'));
 /*Sylesheet Routing END*/
 
+
+//Port Binding
 app.listen(port, () => {
   console.log(`Capstone Server currently listening on ${port}.`);
 });
 
 /* Server Related END */
 
+//Database Section
+//TODO: Implement backend of DB for data analysis + testing
+// var mysql = require('mysql'); //DB package import
+
+// var con = mysql.createConnection({ //Connection build to sql
+//   host: "localhost",
+//   user: "yourusername",
+//   password: "yourpassword"
+// });
+
+// con.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+// });
+
+//End Database
 
 /* Tunneling Section */
+// ECEN PEOPLE DONT TOUCH THIS PART LOL
 const localtunnel = require('localtunnel');
 
 (async () => {
   const tunnel = await localtunnel({ port: 80 , subdomain: "sourdough"});
-  tunnel.url; //Tunnel URL
+  tunnel.url; //Tunnel URL on creation
   tunnel.on('close', () => { //Close tunnel upon termination
   });
 })();
